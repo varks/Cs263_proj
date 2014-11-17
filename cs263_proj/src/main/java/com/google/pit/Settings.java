@@ -57,7 +57,8 @@ public class Settings extends HttpServlet {
         		.withUrl("/worker"));    
       
       */
-	   resp.sendRedirect("/worker");
+	   //resp.sendRedirect("/worker"); 
+	   resp.sendRedirect("/sms");
 	  }
 
 }

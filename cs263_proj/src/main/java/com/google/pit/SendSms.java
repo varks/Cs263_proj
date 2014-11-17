@@ -42,7 +42,7 @@ public class SendSms extends HttpServlet {
     public static final String AUTH_TOKEN = "0a5940ce7a8585d733170a4aab1620a6";
  
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //Create a Twilio REST client
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         Account account = client.getAccount();
