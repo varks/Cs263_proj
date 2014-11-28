@@ -50,6 +50,7 @@ public class SendSms extends HttpServlet {
         //Use the API to send a text message
         SmsFactory smsFactory = account.getSmsFactory();
         Map<String, String> smsParams = new HashMap<String, String>();
+        /* Read the number from DataStore */
         smsParams.put("To", "+18056377338 "); 
         smsParams.put("From", "(805) 883-6351"); // Replace with a Twilio phone number in your account
         smsParams.put("Body", "Test Sample 1");

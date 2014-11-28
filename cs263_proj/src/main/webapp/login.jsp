@@ -20,7 +20,7 @@
         pageContext.setAttribute("user", user);
 %>
 
-<p>Hello, ${fn:escapeXml(user.nickname)}! (You can
+<p> Hello, ${fn:escapeXml(user.nickname)}! (You can
     <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
 <%
 } else {
@@ -32,7 +32,6 @@
     }
 	
 %>
-
 
 </body>
 </html>
