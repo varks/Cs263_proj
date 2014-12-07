@@ -40,20 +40,27 @@ public class SendSms extends HttpServlet {
 	
 	public static final String ACCOUNT_SID = "AC5dd34f2b8a80e573c9c636ea4900b48a";
     public static final String AUTH_TOKEN = "0a5940ce7a8585d733170a4aab1620a6";
- 
+    public static final String Twilio_Num = "(805) 883-6351";
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //Create a Twilio REST client
         TwilioRestClient client = new TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN);
         Account account = client.getAccount();
- 
+        
+        /* Read SMS parameters */
+        String to_num = request.getParameter("to_cell");
+        String tvalue = request.getParameter("tvalue");
+        String curr_value = request.getParameter("cvalue");
+        String message = "CNBOT: The currency rate has come down below the set threshold rate to" + curr_value;
+                          
+        		
         //Use the API to send a text message
         SmsFactory smsFactory = account.getSmsFactory();
         Map<String, String> smsParams = new HashMap<String, String>();
         /* Read the number from DataStore */
-        smsParams.put("To", "+18056377338 "); 
-        smsParams.put("From", "(805) 883-6351"); // Replace with a Twilio phone number in your account
-        smsParams.put("Body", "Test Sample 1");
+        smsParams.put("To", to_num); 
+        smsParams.put("From", Twilio_Num); // Replace with a Twilio phone number in your account
+        smsParams.put("Body", message);
         try {
         Sms sms = smsFactory.create(smsParams);
         }

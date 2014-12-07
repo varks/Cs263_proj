@@ -88,7 +88,7 @@
             <p class="lead"> CEN bot helps you keep track of changes in exchange rate of your home currency and help you plan your fund transfers at the lowest possible exchange rate</p>
     	    <p class="lead">
            
-			<a href="<%= userService.createLoginURL("/home.html") %>" class="btn btn-lg btn-default"> Please Sign in</a>
+			<a href="<%= userService.createLoginURL("/page1.html") %>" class="btn btn-lg btn-default"> Please Sign in</a>
      with your Google accounts.</p>
                 
            <!--     <a href="#" class="btn btn-lg btn-default">Learn more</a> -->

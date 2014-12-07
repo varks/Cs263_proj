@@ -31,17 +31,25 @@ public class Settings extends HttpServlet {
 	      throws IOException {
 	    UserService userService = UserServiceFactory.getUserService();
 	    User user = userService.getCurrentUser();
+	    
+	    if (user == null)
+	    	resp.sendRedirect("/coverindex.jsp");
 
 	    String currency = req.getParameter("currency");
 	    String phoneNumber = req.getParameter("Phone-Number");
 	
 	    String tvalue = req.getParameter("tvalue");
 	    String frequency = req.getParameter("frequency");
+	    String first_name = req.getParameter("first_name");
+	    String last_name = req.getParameter("last_name");	
 	    Date date = new Date();
-	    Key currencyKey = KeyFactory.createKey("CurrencyTracker", "Test");
+	    /* convert user to string */
+	    Key currencyKey = KeyFactory.createKey("CurrencyTracker", user.toString());
 	    Entity  c1 = new Entity(currencyKey);
 	    c1.setProperty("user", user);
 	    c1.setProperty("date", date);
+	    c1.setProperty("first_name", first_name);
+	    c1.setProperty("last_name", last_name);
 	    c1.setProperty("currency", currency);
 	    c1.setProperty("phoneNumber", phoneNumber);
 	    c1.setProperty("tvalue", tvalue);
@@ -51,14 +59,14 @@ public class Settings extends HttpServlet {
 	    datastore.put(c1);
 	    
 	    /* Start a worker Thread and return back a home page */
-	    /*
+	    
 	    Queue queue = QueueFactory.getDefaultQueue();
 	    queue.add(TaskOptions.Builder
         		.withUrl("/worker"));    
       
-      */
-	   //resp.sendRedirect("/worker"); 
-	   resp.sendRedirect("/sms");
+      
+	  // resp.sendRedirect("/worker"); 
+	   //resp.sendRedirect("/sms");
 	  }
 
 }
