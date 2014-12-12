@@ -41,9 +41,9 @@ public class Worker extends HttpServlet {
 	
 	public static final String ACCOUNT_SID = "AC5dd34f2b8a80e573c9c636ea4900b48a";
     public static final String AUTH_TOKEN = "0a5940ce7a8585d733170a4aab1620a6";
-    public static final String Twilio_Num = "(805) 883-6351";
+    public static final String Twilio_Num = "+18664514765";
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     	
     	final String urlString = "http://openexchangerates.org/api/latest.json?app_id=6be8c36ccb21453b8044563cb7abf2c4";
