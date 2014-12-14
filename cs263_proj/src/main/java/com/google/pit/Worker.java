@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,8 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskOptions;
@@ -58,6 +62,13 @@ public class Worker extends HttpServlet {
     	}
     	System.out.println("Print Json" + jsonResp);
     	response.getWriter().println("<p>" + jsonResp + "</p>");
+    	
+    	/* Store JSON Response in MemCache */
+    	    	
+        MemcacheService memcache = MemcacheServiceFactory.getMemcacheService();
+        memcache.put("json_resp", jsonResp.toString());
+        
+        	
     	
     	try {
     		

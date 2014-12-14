@@ -45,20 +45,11 @@
     User user = userService.getCurrentUser();
     if (user != null) {
         pageContext.setAttribute("user", user);
+    }
 %>
 
-<p> Hello, ${fn:escapeXml(user.nickname)}! (You can
-    <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)</p>
-<%
-} else {
-%>
-<p>Hello!
-    <a href="<%= userService.createLoginURL("/home.html") %>"> Please Sign in</a>
-    to use your all new Currency Exchange rate Notification Bot. </p>
-<%
-    }
 	
-%>
+
 
     <div class="site-wrapper">
 
@@ -84,20 +75,18 @@
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">Currency Exchange Notification bot</h1>
+            <h1 class="cover-heading">Currency Exchange Notification Bot</h1>
             <p class="lead"> CEN bot helps you keep track of changes in exchange rate of your home currency and help you plan your fund transfers at the lowest possible exchange rate</p>
     	    <p class="lead">
-           
-			<a href="<%= userService.createLoginURL("/page1.html") %>" class="btn btn-lg btn-default"> Please Sign in</a>
+            
+			<p><a href="<%= userService.createLoginURL("/reg.jsp") %>" class="btn btn-lg btn-default"> Please Sign in</a>
      with your Google accounts.</p>
-                
-           <!--     <a href="#" class="btn btn-lg btn-default">Learn more</a> -->
             </p>
           </div>
 
           <div class="mastfoot">
             <div class="inner">
-              <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+              <p>Cover template for CNBOT, by <a href="https://twitter.com/ksvarun">@ksvarun</a>.</p>
             </div>
           </div>
 

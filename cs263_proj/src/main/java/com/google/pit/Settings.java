@@ -48,12 +48,17 @@ public class Settings extends HttpServlet {
 	    Entity  c1 = new Entity(currencyKey);
 	    c1.setProperty("user", user);
 	    c1.setProperty("date", date);
-	    c1.setProperty("first_name", first_name);
-	    c1.setProperty("last_name", last_name);
-	    c1.setProperty("currency", currency);
-	    c1.setProperty("phoneNumber", phoneNumber);
-	    c1.setProperty("tvalue", tvalue);
-	    c1.setProperty("frequency", frequency);
+	    if(first_name != null)
+	    	c1.setProperty("first_name", first_name);
+	    if(last_name != null)
+	    	c1.setProperty("last_name", last_name);
+	    if(currency != null)
+	    	c1.setProperty("currency", currency);
+	    if(phoneNumber != null)
+	    	c1.setProperty("phoneNumber", phoneNumber);
+	    if(tvalue != null)
+	    	c1.setProperty("tvalue", tvalue);
+	    
 
 	    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 	    datastore.put(c1);
@@ -66,7 +71,7 @@ public class Settings extends HttpServlet {
       
       
 	   //resp.sendRedirect("/worker"); 
-	   resp.sendRedirect("/home.html");
+	   resp.sendRedirect("/homePage.jsp");
 	  }
 
 }
