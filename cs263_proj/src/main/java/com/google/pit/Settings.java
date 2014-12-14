@@ -43,20 +43,23 @@ public class Settings extends HttpServlet {
 	    String first_name = req.getParameter("first_name");
 	    String last_name = req.getParameter("last_name");	
 	    Date date = new Date();
+	    
+	    System.out.println("In Worker - " + "first_name " + first_name + " last_name " + last_name 
+	    + " phonenumber " + phoneNumber +  " tvalue " + tvalue + " user" + user.toString());
 	    /* convert user to string */
 	    Key currencyKey = KeyFactory.createKey("CurrencyTracker", user.toString());
 	    Entity  c1 = new Entity(currencyKey);
 	    c1.setProperty("user", user);
 	    c1.setProperty("date", date);
-	    if(first_name != null)
+	    if(!first_name.equals(""))
 	    	c1.setProperty("first_name", first_name);
-	    if(last_name != null)
+	    if(!last_name.equals(""))
 	    	c1.setProperty("last_name", last_name);
-	    if(currency != null)
+	    if(!currency.equals(""))
 	    	c1.setProperty("currency", currency);
-	    if(phoneNumber != null)
+	    if(!phoneNumber.equals(""))
 	    	c1.setProperty("phoneNumber", phoneNumber);
-	    if(tvalue != null)
+	    if(!tvalue.equals(""))
 	    	c1.setProperty("tvalue", tvalue);
 	    
 

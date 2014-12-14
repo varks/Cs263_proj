@@ -86,7 +86,7 @@ public class Worker extends HttpServlet {
     		response.getWriter().println("<p> INR is" + INR + "</p>");
     		
     		/* Iterate through all users , check and sendSMS if appropriate */
-    	     Query q = new Query("CurrencyTracker");
+    	        Query q = new Query("CurrencyTracker");
     	        PreparedQuery pq = DatastoreServiceFactory.getDatastoreService().prepare(q);
     	        List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
     	        response.setContentType("text/plain");

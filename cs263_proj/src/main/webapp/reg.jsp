@@ -14,8 +14,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title> Preference Page</title>
+    
+    <title> Registration Form </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
@@ -53,7 +53,7 @@
 <div class="container">
 
 <div class="page-header">
-    <h2> <p> Hello, ${fn:escapeXml(user.nickname)}!Please update your preferences</p> </h2>
+    <h3 class="text-muted"> Hello, ${fn:escapeXml(user.nickname)}!!! Register to receive notifications </h3> 
 </div>
 
 <!-- Registration Form - START -->
@@ -61,6 +61,9 @@
         <div class="row centered-form">
             <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
                 <div class="panel panel-default">
+                   <div class="panel-heading">
+                        <h3 class="panel-title text-center">Please fill out the below details</h3>
+                    </div>
                   <div class="panel-body">
                         <form role="form" action = "/settings">
                             <div class="form-group">
@@ -91,23 +94,8 @@
 								    <option>2</option>
 								   </select>
 							</div>
-                            
-                                          
-                            
-                           <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input type="submit" value="Register" class="btn btn-info btn-block">
+                                              
+                             <input type="submit" value="Register" class="btn btn-info btn-block">
                         </form>
                     </div>
                 </div>
@@ -117,7 +105,7 @@
 
 <style>
 #container1 {
-    background-color: lighten(@gray-base, 93.5%);
+    background-color: lighten(@gray-base, 13.5%);
 }
 
 .centered-form {
