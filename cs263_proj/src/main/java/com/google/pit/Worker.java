@@ -127,6 +127,7 @@ public class Worker extends HttpServlet {
     }
 	
 	
+	/* @param : Takes Phone number and Threshold. @return: Nothing */
 	public void sendSMS(String To, String cvalue, String threshold) {
 		
 		 //Create a Twilio REST client
@@ -158,8 +159,83 @@ public class Worker extends HttpServlet {
         }
     } 
 		
-		
-		
+	/* @return: nothing @param: request, response. - GET requests for cron job */	
+	protected void doGET(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    	
+    	final String urlString = "http://openexchangerates.org/api/latest.json?app_id=6be8c36ccb21453b8044563cb7abf2c4";
+    	/* fetch the currency json api and fiddle with that */
+    	URL url = new URL(urlString);
+    	BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+    	String line;
+    	StringBuffer jsonResp = new StringBuffer();
+    	
+    	while((line = reader.readLine()) != null) {
+    			jsonResp.append(line);
+    	}
+    	System.out.println("Print Json" + jsonResp);
+    	response.getWriter().println("<p>" + jsonResp + "</p>");
+    	
+    	/* Store JSON Response in MemCache */
+    	    	
+        MemcacheService memcache = MemcacheServiceFactory.getMemcacheService();
+        memcache.put("json_resp", jsonResp.toString());
+        
+        	
+    	
+    	try {
+    		
+    		response.getWriter().println("<p> In try blcok </p>");
+    		JSONTokener tokens = new JSONTokener(jsonResp.toString());
+            JSONObject jsonObj = new JSONObject(tokens);
+    		String currency_rates = jsonObj.getString("rates");
+    		
+        
+    		JSONObject jsonObj2 = new JSONObject(currency_rates);
+    		
+    		/* Get Value based on datastore */
+    		String INR = jsonObj2.getString("INR");
+    		float cur_value = Float.parseFloat(INR);
+    		response.getWriter().println("<p> INR is" + INR + "</p>");
+    		
+    		/* Iterate through all users , check and sendSMS if appropriate */
+    	    Query q = new Query("CurrencyTracker");
+    	    PreparedQuery pq = DatastoreServiceFactory.getDatastoreService().prepare(q);
+    	    List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
+    	    response.setContentType("text/plain");
+    	    /* Debug */
+    	    System.out.println("rows " + results.size());
+    	        
+    	    for (int i = 0; i < results.size(); i++) {
+    	    	Entity entity = results.get(i);
+    	        response.getWriter().println("<p> " + 
+    	        entity.getKey().toString() + "currency " +
+    	        entity.getProperty("currency").toString() + " Date "
+    	          		+ entity.getProperty("date").toString() + "</p> <br/>");
+    	            
+    	        String tvalue = entity.getProperty("tvalue").toString();
+    	        String cell_num = entity.getProperty("phoneNumber").toString();
+    	        float set_value = Float.parseFloat(tvalue);
+    	            
+    	        /* Debug */
+    	        System.out.println("tvalue= " + tvalue);
+    	        System.out.println("cell_num= " + cell_num);
+    	        System.out.println("curr_value" + INR);
+    	            
+    	        if(cur_value <= set_value) {
+    	        	sendSMS (cell_num, INR ,tvalue);	            	
+    	        }
+    	            
+    	    }
+    	        
+    	    		
+    	} catch(Exception e) {
+        
+    		response.getWriter().println("<p> In Exception </p>");
+    		
+    	}
+    	
+    }		
 	
 	
 }
