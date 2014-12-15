@@ -40,7 +40,9 @@ import com.twilio.sdk.resource.instance.Sms;
 
 import static com.google.appengine.api.taskqueue.TaskOptions.Builder.*;
 
-
+/* Uses Urlfetch to fetch Json from a currency exchange site and triggers SMS notifications
+ * if conditions are met. Twilio Api is used to send SMS. This also runs as a cron job.
+ */
 public class Worker extends HttpServlet {
 	
 	public static final String ACCOUNT_SID = "AC5dd34f2b8a80e573c9c636ea4900b48a";
@@ -86,47 +88,36 @@ public class Worker extends HttpServlet {
     		response.getWriter().println("<p> INR is" + INR + "</p>");
     		
     		/* Iterate through all users , check and sendSMS if appropriate */
-    	        Query q = new Query("CurrencyTracker");
-    	        PreparedQuery pq = DatastoreServiceFactory.getDatastoreService().prepare(q);
-    	        List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
-    	        response.setContentType("text/plain");
-    	        System.out.println("rows " + results.size());
+    	    Query q = new Query("CurrencyTracker");
+    	    PreparedQuery pq = DatastoreServiceFactory.getDatastoreService().prepare(q);
+    	    List<Entity> results = pq.asList(FetchOptions.Builder.withDefaults());
+    	    response.setContentType("text/plain");
+    	    /* Debug */
+    	    System.out.println("rows " + results.size());
     	        
-    	        for (int i = 0; i < results.size(); i++) {
-    	            Entity entity = results.get(i);
-    	            response.getWriter().println("<p> " + 
-    	            entity.getKey().toString() + "currency " +
-    	            entity.getProperty("currency").toString() + " Date "
-    	            		+ entity.getProperty("date").toString() + "</p> <br/>");
+    	    for (int i = 0; i < results.size(); i++) {
+    	    	Entity entity = results.get(i);
+    	        response.getWriter().println("<p> " + 
+    	        entity.getKey().toString() + "currency " +
+    	        entity.getProperty("currency").toString() + " Date "
+    	          		+ entity.getProperty("date").toString() + "</p> <br/>");
     	            
-    	            String tvalue = entity.getProperty("tvalue").toString();
-    	            String cell_num = entity.getProperty("phoneNumber").toString();
-    	            float set_value = Float.parseFloat(tvalue);
+    	        String tvalue = entity.getProperty("tvalue").toString();
+    	        String cell_num = entity.getProperty("phoneNumber").toString();
+    	        float set_value = Float.parseFloat(tvalue);
     	            
-    	            System.out.println("tvalue= " + tvalue);
-    	            System.out.println("cell_num= " + cell_num);
-    	            System.out.println("curr_value" + INR);
-    	            if(cur_value <= set_value) {
-    	            	//Queue queue = QueueFactory.getDefaultQueue();
-    	        	    //queue.add(TaskOptions.Builder
-    	                	//	.withUrl("/sms")
-    	                		//.param("to_cell", cell_num)
-    	                		//.param("tvalue", tvalue)
-    	                		//.param("cvalue", INR));
-    	                sendSMS (cell_num, INR ,tvalue);	            	
-    	            }
+    	        /* Debug */
+    	        System.out.println("tvalue= " + tvalue);
+    	        System.out.println("cell_num= " + cell_num);
+    	        System.out.println("curr_value" + INR);
     	            
-    	            response.getWriter().println(" iteration i " + i);
-    	            	
-    	            
-    	            
-    	            //Do anything needed with the information from each entity.
+    	        if(cur_value <= set_value) {
+    	        	sendSMS (cell_num, INR ,tvalue);	            	
     	        }
+    	            
+    	    }
     	        
-    		
-    		
-    		
-    		
+    	    		
     	} catch(Exception e) {
         
     		response.getWriter().println("<p> In Exception </p>");

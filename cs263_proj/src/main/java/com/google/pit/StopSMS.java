@@ -23,6 +23,7 @@ import com.google.appengine.api.users.UserServiceFactory;
 
 public class StopSMS extends HttpServlet {
 
+	/* Responds to Stop Notfications signal from home page by taking appropriate actions */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		UserService userService = UserServiceFactory.getUserService();

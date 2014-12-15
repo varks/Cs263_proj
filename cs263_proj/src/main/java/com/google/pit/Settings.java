@@ -25,13 +25,14 @@ public class Settings extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+     /* Reads the form parameters, stores in datastore and creates a task queue to process them */
 	@Override
 	  public void doGet(HttpServletRequest req, HttpServletResponse resp)
 	      throws IOException {
 	    UserService userService = UserServiceFactory.getUserService();
 	    User user = userService.getCurrentUser();
 	    
+	    /* Redirect to cover page to prevent unauthorized access */
 	    if (user == null)
 	    	resp.sendRedirect("/coverindex.jsp");
 
@@ -44,8 +45,10 @@ public class Settings extends HttpServlet {
 	    String last_name = req.getParameter("last_name");	
 	    Date date = new Date();
 	    
+	   /* Debug Statements */
 	    System.out.println("In Worker - " + "first_name " + first_name + " last_name " + last_name 
 	    + " phonenumber " + phoneNumber +  " tvalue " + tvalue + " user" + user.toString());
+	    
 	    /* convert user to string */
 	    Key currencyKey = KeyFactory.createKey("CurrencyTracker", user.toString());
 	    Entity  c1 = new Entity(currencyKey);
@@ -73,7 +76,7 @@ public class Settings extends HttpServlet {
         		.withUrl("/worker"));    
       
       
-	   //resp.sendRedirect("/worker"); 
+	    
 	   resp.sendRedirect("/homePage.jsp");
 	  }
 

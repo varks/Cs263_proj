@@ -8,14 +8,20 @@
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page import="java.io.*,java.util.*" %>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>    
-
-
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ page import="com.google.appengine.api.datastore.DatastoreService" %>
+<%@ page import="com.google.appengine.api.datastore.DatastoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.datastore.Entity" %>
+<%@ page import="com.google.appengine.api.datastore.FetchOptions" %>
+<%@ page import="com.google.appengine.api.datastore.Key" %>
+<%@ page import="com.google.appengine.api.datastore.KeyFactory" %>
+<%@ page import="com.google.appengine.api.datastore.Query" %>
+<%@ page import="com.google.appengine.api.datastore.EntityNotFoundException" %>    
 <!DOCTYPE html>
 <html>
 <head>
     
-    <title> Registration Form </title>
+    <title>Registration Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
@@ -45,6 +51,19 @@
     response.sendRedirect(url);
     }
 	
+    Key userKey = KeyFactory.createKey("CurrencyTracker", user.toString());
+	 
+	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+	Entity currentUser;
+	
+	try {
+	    currentUser = datastore.get(userKey);
+	    response.sendRedirect("/homePage.jsp");	
+	} catch (Exception e) {
+	    // User doesn't exist!
+		
+	}
+
 %>
 
 <%
@@ -75,7 +94,8 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="Phone-Number" id="Phone-Number" class="form-control input-sm" placeholder="Phone Number">
+                                <input type="tel" name="Phone-Number" id="Phone-Number" class="form-control input-sm" placeholder="eg 8056377889"
+                                 pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
                             </div>
                             <div class="form-group">
   							<label for="select currency">Select Currency</label>
@@ -85,17 +105,17 @@
 								</div>
 			               	<div class="form-group">
 			               	<label for="select Threshold">Select Threshold Value</label>
-                                <input type="text" name="tvalue" id="tvalue" class="form-control input-sm" placeholder="Eg 61 for INR">
+                                <input type="number" min="0" max="80" name="tvalue" id="tvalue" class="form-control input-sm" placeholder="Eg 61 for INR" required>
                             </div>
                             <div class="form-group">
-  							<label for="select Frequency ( in days)">Notification Frequency</label>
+  							<label for="select Frequency ( in days)">Notification Frequency ( in days )</label>
 								  <select class="form-control" id="frequency" name = "frequecy" >
 								    <option>1</option>
 								    <option>2</option>
 								   </select>
 							</div>
                                               
-                             <input type="submit" value="Register" class="btn btn-info btn-block">
+                             <input type="submit" value="Register" id="submit" name="submit" class="btn btn-info btn-block">
                         </form>
                     </div>
                 </div>

@@ -1,8 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    
+<%@ page language="java" %>
+<%@ page import="com.google.appengine.api.users.User" %>
+<%@ page import="com.google.appengine.api.users.UserService" %>
+<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="java.io.*,java.util.*" %>
+<%@ page import="javax.servlet.http.HttpServletRequest" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title> Preference Page</title>
+    
+    <title>Update Form</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
@@ -13,10 +24,34 @@
 </head>
 <body>
 
+<%
+    UserService userService = UserServiceFactory.getUserService();
+    User user = userService.getCurrentUser();
+    if (user != null) {
+        pageContext.setAttribute("user", user);
+
+   
+} else {
+	
+	
+%>
+<!--  <p>Hello! -->
+    <!--  <a href=" %>"> Please Sign in</a>
+    to use your Currency Exchange rate Notification Bot. </p> -->
+<% 
+	String url = "/coverindex.jsp";
+    response.sendRedirect(url);
+    }
+	
+%>
+
+<%
+	if (user != null) {
+%>
 <div class="container">
 
 <div class="page-header">
-    <h1>Please update your preferences <small></small></h1>
+    <h3 class="text-muted"> Hello, ${fn:escapeXml(user.nickname)}!!! Register to receive notifications </h3> 
 </div>
 
 <!-- Registration Form - START -->
@@ -24,10 +59,10 @@
         <div class="row centered-form">
             <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
                 <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-center">Please Register</h3>
+                   <div class="panel-heading">
+                        <h3 class="panel-title text-center">Please fill out the below details</h3>
                     </div>
-                    <div class="panel-body">
+                  <div class="panel-body">
                         <form role="form" action = "/settings">
                             <div class="form-group">
                                 <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
@@ -38,42 +73,28 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="Phone-Number" id="Phone-Number" class="form-control input-sm" placeholder="Phone Number">
+                                <input type="tel" name="Phone-Number" id="Phone-Number" class="form-control input-sm" placeholder="eg: 8056377345"
+                                 pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" required>
                             </div>
                             <div class="form-group">
   							<label for="select currency">Select Currency</label>
 								  <select class="form-control" id="currency" name = "currency" >
 								    <option>INR</option>
-								    <option>Yen</option>
 								   </select>
 								</div>
 			               	<div class="form-group">
-                                <input type="text" name="tvalue" id="tvalue" class="form-control input-sm" placeholder="Eg 61 for INR">
+			               	<label for="select Threshold">Select Threshold Value</label>
+                                <input type="number" min="0" max="80" name="tvalue" id="tvalue" class="form-control input-sm" placeholder="Eg 61 for INR" required>
                             </div>
                             <div class="form-group">
-  							<label for="select Frequency ( in days)">Notification Frequency</label>
+  							<label for="select Frequency ( in days)">Notification Frequency ( in days )</label>
 								  <select class="form-control" id="frequency" name = "frequecy" >
 								    <option>1</option>
 								    <option>2</option>
 								   </select>
 							</div>
-                            
-                                          
-                            
-                           <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input type="submit" value="Register" class="btn btn-info btn-block">
+                                              
+                             <input type="submit" value="Register" id="submit" name="submit" class="btn btn-info btn-block">
                         </form>
                     </div>
                 </div>
@@ -83,7 +104,7 @@
 
 <style>
 #container1 {
-    background-color: #e2dada;
+    background-color: lighten(@gray-base, 13.5%);
 }
 
 .centered-form {
@@ -100,5 +121,8 @@
 
 </div>
 
+<%
+	}
+%>
 </body>
 </html>

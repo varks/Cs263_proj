@@ -19,10 +19,6 @@
     <url-pattern>/context/*</url-pattern>
 </servlet-mapping>
 <servlet>
-        <servlet-name>signin</servlet-name>
-        <servlet-class>com.google.pit.Authentication</servlet-class>
-</servlet>
-<servlet>
         <servlet-name>settings</servlet-name>
         <servlet-class>com.google.pit.Settings</servlet-class>
 </servlet>
@@ -40,10 +36,6 @@
         <servlet-class>com.google.pit.StopSMS</servlet-class>
 </servlet>
 
-<servlet-mapping>
-        <servlet-name>signin</servlet-name>
-        <url-pattern>/signin</url-pattern>
-</servlet-mapping>
 <servlet-mapping>
         <servlet-name>settings</servlet-name>
         <url-pattern>/settings</url-pattern>
