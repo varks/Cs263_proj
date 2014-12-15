@@ -2,7 +2,7 @@
 <cronentries>
   <cron>
     <url>/worker</url>
-    <description>Calls the  /worker every 5 hours</description>
+    <description>Calls the  /worker every 10 hours</description>
     <schedule>every 600 minutes</schedule>
   </cron>
 </cronentries> 
