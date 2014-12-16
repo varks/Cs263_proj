@@ -1,0 +1,23 @@
+Selenium Python test script with Firefox Webdriver. [ Firefox has to be installed if not present ]
+
+There are two test scripts which tests two possible control flows(navigation) for this app. These test scripts require
+python selenium package to be installed. It can be installed with the below command.
+
+$pip install selenium
+
+Test cases in testcase1.py :
+	Checks the navigation of web pages in the app for a new user and verifies for its correctness by inserting appropriate asserts.
+
+Test cases in testcase2.py
+    Checks the navigation of web pages in the app for an existing user and verifies for its correctness by inserting appropriate asserts.
+    	
+Both the test cases would require Gmail authentication and you need to modify the scripts with appropriate gmail id and password.
+
+The scripts can be run as follows.
+
+$python testcase1.py
+$python testcase2.py
+
+
+
+END
