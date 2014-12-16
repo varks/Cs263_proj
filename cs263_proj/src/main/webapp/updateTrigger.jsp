@@ -94,7 +94,7 @@
 								   </select>
 							</div>
                                               
-                             <input type="submit" value="Register" id="submit" name="submit" class="btn btn-info btn-block">
+                             <input type="submit" value="Update" id="submit" name="submit" class="btn btn-info btn-block">
                         </form>
                     </div>
                 </div>
